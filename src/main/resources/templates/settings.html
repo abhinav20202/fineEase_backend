@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Finance Tracker</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Common CSS -->
+    <link rel="stylesheet" href="../css/common.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <!-- <a class="navbar-brand" href="overview.html">
+                <img src="piggy.png" alt="Finance Logo" class="d-inline-block align-text-top" style="width: 43px; height: 50px;">
+                Finance
+            </a> -->
+            <div class="d-flex align-items-center">
+                <img th:src="@{/assets/piggy.png}" alt="Finance Logo" class="d-inline-block align-text-top" style="width: 43px; height: 50px;">
+                <span class="logo-text ms-2">FinEase</span>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" th:href="@{overview}">Overview</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{transactions}">Transactions</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{reports}">Invoice</a></li>
+                </ul>
+                <div class="dropdown">
+                    <img 
+                        th:src="@{/assets/boy.jpg}" 
+                        class="rounded-circle me-2 dropdown-toggle" 
+                        alt="Profile" 
+                        id="profileDropdown" 
+                        data-bs-toggle="dropdown" 
+                        aria-expanded="false" 
+                        style="cursor: pointer;" />
+                    <span class="text-white">Navinav</span>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                        <li><a class="dropdown-item" th:href="@{settings}">Settings</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" th:href="@{logout}">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Settings Section -->
+   <!-- <div class="container mt-4">
+        <h1 class="text-center mb-4">Settings</h1>
+        <div class="accordion" id="settingsAccordion">
+
+             Income Section 
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="incomeHeader">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#incomeSection" aria-expanded="true" aria-controls="incomeSection">
+                        Set Income
+                    </button>
+                </h2>
+                <div id="incomeSection" class="accordion-collapse collapse show" aria-labelledby="incomeHeader" data-bs-parent="#settingsAccordion">
+                    <div class="accordion-body">
+                        <label for="setIncome" class="form-label">Set Your Monthly Income:</label>
+                        <input type="number" id="setIncome" class="form-control mb-3" placeholder="Enter your income" required>
+                        <button class="btn btn-primary" id="saveIncome">Save Income</button>
+                    </div>
+                </div>
+            </div>
+
+             Spend Limits Section 
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="spendLimitHeader">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#spendLimitSection" aria-expanded="false" aria-controls="spendLimitSection">
+                        Set Spend Limits
+                    </button>
+                </h2>
+                <div id="spendLimitSection" class="accordion-collapse collapse" aria-labelledby="spendLimitHeader" data-bs-parent="#settingsAccordion">
+                    <div class="accordion-body">
+                        <label for="dailyLimit" class="form-label">Daily Spend Limit:</label>
+                        <input type="number" id="dailyLimit" class="form-control mb-3" placeholder="Enter daily spend limit" required>
+                        <label for="monthlyLimit" class="form-label">Monthly Spend Limit:</label>
+                        <input type="number" id="monthlyLimit" class="form-control mb-3" placeholder="Enter monthly spend limit" required>
+                        <button class="btn btn-primary" id="saveSpendLimits">Save Limits</button>
+                    </div>
+                </div>
+            </div>
+
+             Expense Categories Section 
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="categoriesHeader">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#categoriesSection" aria-expanded="false" aria-controls="categoriesSection">
+                        Manage Expense Categories
+                    </button>
+                </h2>
+                <div id="categoriesSection" class="accordion-collapse collapse" aria-labelledby="categoriesHeader" data-bs-parent="#settingsAccordion">
+                    <div class="accordion-body">
+                        <label for="addCategory" class="form-label">Add a New Category:</label>
+                        <input type="text" id="addCategory" class="form-control mb-3" placeholder="Enter category name" required>
+                        <button class="btn btn-primary" id="saveCategory">Add Category</button>
+                        <ul class="list-group mt-3" id="categoriesList">
+                             Dynamic categories will appear here 
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+             Fixed Expense Reminders Section 
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="remindersHeader">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#remindersSection" aria-expanded="false" aria-controls="remindersSection">
+                        Set Fixed Expense Reminders
+                    </button>
+                </h2>
+                <div id="remindersSection" class="accordion-collapse collapse" aria-labelledby="remindersHeader" data-bs-parent="#settingsAccordion">
+                    <div class="accordion-body">
+                        <label for="reminderName" class="form-label">Expense Name:</label>
+                        <input type="text" id="reminderName" class="form-control mb-3" placeholder="Enter expense name" required>
+                        <label for="reminderAmount" class="form-label">Amount:</label>
+                        <input type="number" id="reminderAmount" class="form-control mb-3" placeholder="Enter amount" required>
+                        <label for="reminderDate" class="form-label">Reminder Date:</label>
+                        <input type="date" id="reminderDate" class="form-control mb-3" required>
+                        <button class="btn btn-primary" id="saveReminder">Add Reminder</button>
+                        <ul class="list-group mt-3" id="remindersList">
+                             Dynamic reminders will appear here 
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+             Change Currency Section 
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="currencyHeader">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#currencySection" aria-expanded="false" aria-controls="currencySection">
+                        Change Currency
+                    </button>
+                </h2>
+                <div id="currencySection" class="accordion-collapse collapse" aria-labelledby="currencyHeader" data-bs-parent="#settingsAccordion">
+                    <div class="accordion-body">
+                        <label for="currencySelect" class="form-label">Select Currency:</label>
+                        <select id="currencySelect" class="form-select">
+                            <option value="USD" selected>USD ($)</option>
+                            <option value="EUR">EUR (€)</option>
+                            <option value="GBP">GBP (£)</option>
+                            <option value="INR">INR (₹)</option>
+                            <option value="JPY">JPY (¥)</option>
+                        </select>
+                        <button class="btn btn-primary mt-3" id="saveCurrency">Save Currency</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>-->
+	
+	<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+	    <div class="card p-4 shadow-lg" style="width: 40rem;">
+	        <h2 class="text-center mb-4">User Settings</h2>
+
+	        <!-- Alert Message (Shows only if success message is present) -->
+	        <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+	            <span th:text="${success}"></span>
+	            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	        </div>
+
+	        <form th:action="@{/settings/save}" method="post">
+	            <div class="mb-3">
+	                <label class="form-label">Monthly Income:</label>
+	                <input type="number" name="monthlyIncome" class="form-control" required>
+	            </div>
+
+	            <div class="mb-3">
+	                <label class="form-label">Daily Spend Limit:</label>
+	                <input type="number" name="dailySpendLimit" class="form-control" required>
+	            </div>
+
+	            <div class="mb-3">
+	                <label class="form-label">Monthly Spend Limit:</label>
+	                <input type="number" name="monthlySpendLimit" class="form-control" required>
+	            </div>
+
+	            <button type="submit" class="btn btn-primary w-100">Save Settings</button>
+	        </form>
+	    </div>
+	</div>
+
+	
+
+
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3 mt-auto">
+        <p>&copy; 2025 FinEase. All rights reserved.</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/settings.js}"></script>
+</body>
+
+</html>
