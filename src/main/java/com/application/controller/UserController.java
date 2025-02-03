@@ -33,10 +33,10 @@ public class UserController {
 		return "transactions";
 	}
 	
-	@GetMapping("/reports")
-	public String getReportingPage() {
-		return "reporting";
-	}
+//	@GetMapping("/reports")
+//	public String getReportingPage() {
+//		return "reporting";
+//	}
 	
 	/*
 	 * @GetMapping("/settings") public String getSettingsPage() { return "settings";

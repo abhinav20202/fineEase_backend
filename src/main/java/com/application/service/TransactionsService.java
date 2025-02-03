@@ -87,4 +87,9 @@ public class TransactionsService {
         Double totalExpense = transactionsRepository.getTotalExpenseForUser(userId, firstDayOfMonth, today);
         return (totalExpense != null) ? totalExpense : 0.0;
     }
+	
+	public List<String> getAllCategories(Long userId){
+		return transactionsRepository.findDistinctCategoryByUsersUserId(userId);
+	}
+	
 }
