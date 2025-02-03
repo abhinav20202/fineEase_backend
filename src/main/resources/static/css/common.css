@@ -1,0 +1,206 @@
+/* General Body Styling */
+body {
+    background-color: #ffffff; /* White background for the entire page */
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar Styling */
+.navbar {
+    background-color: #070008; /* Navy blue */
+    color: #ffffff; /* White text */
+}
+
+.navbar .nav-link {
+    color: #ffffff; /* White text */
+    font-weight: bold;
+    transition: color 0.2s ease-in-out;
+}
+
+.navbar .nav-link.active,
+.navbar .nav-link:hover {
+    color: #00b300; /* Green highlight for active links */
+}
+
+.navbar .navbar-brand img {
+    width: 30px;
+    height: 30px;
+}
+
+/* Header Section Styling */
+.header-section {
+    background-color: #ffffff !important; /* Force white background */
+    color: #333333; /* Dark text color */
+    padding: 2rem 0;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.header-section h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333333; /* Dark text */
+}
+
+.header-section p {
+    font-size: 1rem;
+    color: #6c757d; /* Muted text */
+}
+
+/* Form Controls Styling */
+.form-label {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #333333;
+}
+
+.btn-success {
+    background-color: #00b300; /* Green */
+    border-color: #00b300;
+    font-weight: bold;
+}
+
+.btn-success:hover {
+    background-color: #008000; /* Darker green */
+    border-color: #008000;
+}
+
+.btn-light {
+    background-color: #f8f9fa; /* Light gray */
+    border-color: #dcdcdc;
+    color: #333333;
+}
+
+.btn-light:hover {
+    background-color: #e2e6ea; /* Slightly darker gray */
+}
+
+.btn-primary {
+    background-color: #002855; /* Navy blue */
+    border-color: #002855;
+    font-weight: bold;
+}
+
+.btn-primary:hover {
+    background-color: #001d3d; /* Darker navy blue */
+    border-color: #001d3d;
+}
+
+/* Cards Styling */
+.card {
+    border: none;
+    border-radius: 10px;
+    background-color: #f8f9fa; /* Light gray */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    text-align: center;
+}
+
+.card h2 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.card h6 {
+    font-size: 1rem;
+    color: #6c757d; /* Muted text */
+}
+
+/* Table Styling */
+.table {
+    margin-bottom: 1rem;
+    background-color: transparent;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f8f9fa; /* Light gray hover */
+}
+
+.table th {
+    font-weight: bold;
+    text-align: center;
+}
+
+.table td, .table th {
+    padding: 0.75rem;
+    vertical-align: middle;
+    text-align: center;
+}
+
+/* Checkbox Styling */
+input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+}
+
+/* Modal Styling */
+.modal-content {
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+    background-color: #002855;
+    color: #ffffff;
+    border-bottom: none;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.modal-footer {
+    background-color: #f8f9fa;
+    border-top: none;
+}
+
+.modal-footer .btn-primary {
+    background-color: #00b300;
+    border-color: #00b300;
+}
+
+.modal-footer .btn-primary:hover {
+    background-color: #008000;
+    border-color: #008000;
+}
+
+/* Utility Classes */
+.text-muted {
+    color: #6c757d !important; /* Muted gray text */
+}
+
+.text-dark {
+    color: #333333 !important; /* Dark text */
+}
+
+.text-success {
+    color: #00b300 !important; /* Green text */
+}
+
+.text-danger {
+    color: #ff4d4d !important; /* Red text */
+}
+
+.text-primary {
+    color: #002855 !important; /* Navy blue text */
+}
+/* Profile Image Styling */
+.navbar .rounded-circle {
+    width: 35px; /* Set the width of the profile image */
+    height: 35px; /* Set the height of the profile image */
+    object-fit: cover; /* Ensures the image fits within the dimensions without distortion */
+    border: 2px solid #ffffff; /* Optional: Add a white border around the image */
+}
+
+/* Footer */
+footer {
+    background-color: #002855; /* Navy blue */
+    color: white;
+    font-size: 0.9rem;
+}
+
+.logo-text {
+    font-family: 'Inter', sans-serif; /* Ensure this font matches your design */
+    font-size: 1.5rem; /* Adjust size as needed */
+    font-weight: 600; /* Bold text */
+    color: #fffdff; /* Navy blue or adjust as per design */
+}
