@@ -30,7 +30,7 @@ public class Transactions {
 	
 	private String Payee;
 	
-	private String payMode;
+	private String payMode;		
 	
 	private String category;
 	

@@ -89,7 +89,7 @@ public class TransactionsService {
     }
 	
 	public List<String> getAllCategories(Long userId){
-		return transactionsRepository.findDistinctCategoryByUsersUserId(userId);
+		return transactionsRepository.findDistinctCategoriesByUserId(userId);
 	}
 	
 }

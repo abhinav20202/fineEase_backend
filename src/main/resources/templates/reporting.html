@@ -2,18 +2,14 @@
 <html xmlns:th="https://www.thymeleaf.org">
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reports - Finance Tracker</title>
-<!-- Bootstrap CSS -->
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
-	rel="stylesheet">
-<link rel="stylesheet" th:href="@{/css/common.css}">
-<!-- Google Fonts -->
-<link
-	href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
-	rel="stylesheet">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Reports - Finance Tracker</title>
+	<!-- Bootstrap CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" th:href="@{/css/common.css}">
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body class="d-flex flex-column min-vh-100">
@@ -24,35 +20,28 @@
                 <img src="piggy.png" alt="Finance Logo" class="d-inline-block align-text-top" style="width: 43px; height: 50px;">                Finance
             </a> -->
 			<div class="d-flex align-items-center">
-				<img th:src="@{/assets/piggy.png}" alt="Finance Logo"
-					class="d-inline-block align-text-top"
-					style="width: 43px; height: 50px;"> <span
-					class="logo-text ms-2">FinEase</span>
+				<img th:src="@{/assets/piggy.png}" alt="Finance Logo" class="d-inline-block align-text-top"
+					style="width: 43px; height: 50px;"> <span class="logo-text ms-2">FinEase</span>
 			</div>
-			<button class="navbar-toggler" type="button"
-				data-bs-toggle="collapse" data-bs-target="#navbarNav"
-				aria-controls="navbarNav" aria-expanded="false"
-				aria-label="Toggle navigation">
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+				aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<ul class="navbar-nav ms-auto">
 					<li class="nav-item"><a class="nav-link" th:href="@{overview}">Overview</a></li>
-					<li class="nav-item"><a class="nav-link"
-						th:href="@{transactions}">Transactions</a></li>
-					<li class="nav-item"><a class="nav-link active"
-						th:href="@{reporting}">Invoice</a></li>
+					<li class="nav-item"><a class="nav-link" th:href="@{transactions}">Transactions</a></li>
+					<li class="nav-item"><a class="nav-link active" th:href="@{reporting}">Invoice</a></li>
 				</ul>
 				<div class="dropdown">
-					<img th:src="@{/assets/boy.jpg}"
-						class="rounded-circle me-2 dropdown-toggle" alt="Profile"
-						id="profileDropdown" data-bs-toggle="dropdown"
-						aria-expanded="false" style="cursor: pointer;" /> <span
-						class="text-white">Navinav</span>
-					<ul class="dropdown-menu dropdown-menu-end"
-						aria-labelledby="profileDropdown">
+					<img th:src="@{/assets/boy.jpg}" class="rounded-circle me-2 dropdown-toggle" alt="Profile"
+						id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;" />
+					<span class="text-white">Navinav</span>
+					<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
 						<li><a class="dropdown-item" th:href="@{settings}">Settings</a></li>
-						<li><hr class="dropdown-divider"></li>
+						<li>
+							<hr class="dropdown-divider">
+						</li>
 						<li><a class="dropdown-item" th:href="@{logout}">Logout</a></li>
 					</ul>
 				</div>
@@ -61,7 +50,7 @@
 	</nav>
 
 	<!-- Filters Section -->
-	<div class="container mt-4 flex-grow-1">
+	<!--<div class="container mt-4 flex-grow-1">
 		<div class="card p-4">
 			<div class="row mb-3">
 				<div class="col-md-3">
@@ -146,30 +135,87 @@
 		</div>
 	</div>
 
-	<form th:action="@{/report}" method="get">
-		<!-- Hidden input to include userId -->
-		<input type="hidden" name="userId" th:value="${session.userId}" /> <label
-			for="startDate">Start Date:</label> <input type="date" id="startDate"
-			name="startDate" required /> <label for="endDate">End Date:</label>
-		<input type="date" id="endDate" name="endDate" required /> <label
-			for="category">Category:</label> <select id="category"
-			name="category">
-			<option value="">All Categories</option>
-			<option th:each="cat : ${categories}" th:value="${cat}"
-				th:text="${cat}"></option>
-		</select> <label for="search">Search:</label> <input type="text" id="search"
-			name="search" placeholder="Search transactions..." />
-		<button type="submit">Apply Filters</button>
-	</form>
 	<footer class="bg-dark text-white text-center py-3">
 		<p>&copy; 2025 FinEase. All rights reserved.</p>
 	</footer>
 
-	<!-- Bootstrap JS -->
+	 Bootstrap JS 
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-	<!-- <script src="scripts/reporting.js"></script> -->
+	 <script src="scripts/reporting.js"></script> 
 	<script th:src="@{/js/report.js}"></script>
+</body>
+
+</html>
+-->
+
+	<div class="container mt-4">
+		<h1 class="text-center mb-4">Transaction Reports</h1>
+
+		<!-- Filter Form -->
+		<form th:action="@{/reports}" method="get">
+			<div class="row">
+				<!-- Start Date -->
+				<div class="col-md-3">
+					<label for="startDate" class="form-label">Start Date:</label>
+					<input type="date" class="form-control" id="startDate" name="startDate" th:value="${startDate}">
+				</div>
+				<!-- End Date -->
+				<div class="col-md-3">
+					<label for="endDate" class="form-label">End Date:</label>
+					<input type="date" class="form-control" id="endDate" name="endDate" th:value="${endDate}">
+				</div>
+				<!-- Category Filter -->
+				<div class="col-md-3">
+					<label for="category" class="form-label">Category:</label>
+					<select class="form-select" id="category" name="category">
+						<option value="">All Categories</option>
+						<option th:each="cat : ${categories}" th:value="${cat}" th:text="${cat}"></option>
+					</select>
+				</div>
+				<!-- Search -->
+				<div class="col-md-3">
+					<label for="search" class="form-label">Search:</label>
+					<input type="text" class="form-control" id="search" name="search" placeholder="Payee or Category"
+						th:value="${search}">
+				</div>
+			</div>
+			<button type="submit" class="btn btn-primary mt-3">Generate Report</button>
+		</form>
+
+		<!-- Report Table -->
+		<div class="table-responsive">
+			<table class="table table-bordered">
+				<thead class="table-dark">
+					<tr>
+						<th>Category</th>
+						<th>Total Spent</th>
+						<th>Highest Spent</th>
+						<th>Lowest Spent</th>
+						<th>Average Spent</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="report : ${report}">
+						<td th:text="${report.category}"></td>
+						<td th:text="${#numbers.formatCurrency(report.totalSpent)}"></td>
+						<td th:text="${#numbers.formatCurrency(report.highestSpent)}"></td>
+						<td th:text="${#numbers.formatCurrency(report.lowestSpent)}"></td>
+						<td th:text="${#numbers.formatCurrency(report.averageSpent)}"></td>
+					</tr>
+					<tr th:if="${#lists.isEmpty(report)}">
+						<td colspan="5" class="text-center">No records found.</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<!-- Footer -->
+	<footer class="bg-dark text-white text-center py-3 mt-auto">
+		<p>&copy; 2025 FinEase. All rights reserved.</p>
+	</footer>
+
 </body>
 
 </html>

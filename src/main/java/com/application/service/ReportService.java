@@ -16,8 +16,7 @@ public class ReportService {
 	
 	@Autowired TransactionsRepository transactionsRepository;
 	
-	public List<ReportProjection> generateReport(Long userId, LocalDate startDate, LocalDate endDate,String category ,String search) {
-	       return transactionsRepository.generateReport(userId, startDate, endDate, category,search);
-	       
-	   }
+	 public List<ReportProjection> generateReport(Long userId, LocalDate startDate, LocalDate endDate, String search) {
+	        return transactionsRepository.generateReport(userId, startDate, endDate, search);
+	    }
 }
