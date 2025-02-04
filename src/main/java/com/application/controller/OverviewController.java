@@ -2,14 +2,18 @@ package com.application.controller;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Iterator;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.application.dto.ExpenseCategoryChartDTO;
 import com.application.service.SettingsService;
 import com.application.service.TransactionsService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -42,16 +46,38 @@ Double monthlyIncome = settingsService.getMonthlyIncomeByUserId(userId);
         String formattedFirstDay = firstDayOfMonth.format(formatter);
         String formattedToday = today.format(formatter);
         
+        List<ExpenseCategoryChartDTO> expenseData = transactionsService.getExpenseByCategory(userId, firstDayOfMonth, today);
         
-    
-        model.addAttribute("monthlyIncome", monthlyIncome);
-        model.addAttribute("totalExpense", totalExpense);
-        model.addAttribute("remainingAmount", remainingAmount);
-        model.addAttribute("firstDayOfMonth", formattedFirstDay);
-        model.addAttribute("todayDate", formattedToday);
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        String expenseDataJson = "";
+//        try {
+//            expenseDataJson = objectMapper.writeValueAsString(expenseData);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//    
+//        }
+        ObjectMapper objectMapper = new ObjectMapper();
+        String expenseDataJson = "[]";  // Default empty JSON array
+        try {
+            expenseDataJson = objectMapper.writeValueAsString(expenseData);
+            System.out.println(expenseDataJson);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+            model.addAttribute("monthlyIncome", monthlyIncome);
+            model.addAttribute("totalExpense", totalExpense);
+            model.addAttribute("remainingAmount", remainingAmount);
+            model.addAttribute("firstDayOfMonth", formattedFirstDay);
+            model.addAttribute("todayDate", formattedToday);
+            model.addAttribute("expenseData", expenseDataJson);
 
         return "overview";
     }
+
+    
+    
 
     }
 

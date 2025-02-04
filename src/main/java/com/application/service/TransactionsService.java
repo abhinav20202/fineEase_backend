@@ -1,17 +1,22 @@
 package com.application.service;
 
 
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.application.dto.ExpenseCategoryChartDTO;
 import com.application.dto.TransactionsDTO;
 import com.application.entity.Transactions;
 import com.application.entity.Users;
+import com.application.projections.CatgoriesChartProjection;
 import com.application.repository.TransactionsRepository;
 
 import jakarta.transaction.Transaction;
@@ -19,6 +24,8 @@ import jakarta.transaction.Transaction;
 
 @Service
 public class TransactionsService {
+	
+	private static final Logger log = LoggerFactory.getLogger(TransactionsService.class);
 	
 	@Autowired TransactionsRepository transactionsRepository;
 	
@@ -90,6 +97,17 @@ public class TransactionsService {
 	
 	public List<String> getAllCategories(Long userId){
 		return transactionsRepository.findDistinctCategoriesByUserId(userId);
+	}
+	
+	public List<ExpenseCategoryChartDTO> getExpenseByCategory(Long userId, LocalDate startDate, LocalDate endDate){
+		
+		List<CatgoriesChartProjection> Projections = transactionsRepository.findBycategory(userId, startDate, endDate);
+	return	Projections.stream()
+		    .map(p -> new ExpenseCategoryChartDTO(p.getExpenseCategory(), p.getCategoryExpense()))
+		    .collect(Collectors.toList());
+		    
+		
+
 	}
 	
 }

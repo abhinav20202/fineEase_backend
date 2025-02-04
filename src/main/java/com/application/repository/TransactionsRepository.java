@@ -9,8 +9,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.application.dto.ExpenseCategoryChartDTO;
 import com.application.dto.ReportProjection;
 import com.application.entity.Transactions;
+import com.application.projections.CatgoriesChartProjection;
 
 @Repository
 public interface TransactionsRepository extends JpaRepository<Transactions, Long> {
@@ -74,6 +76,22 @@ public interface TransactionsRepository extends JpaRepository<Transactions, Long
 	        @Query("SELECT DISTINCT t.category FROM Transactions t WHERE t.users.id = :userId")
 	        List<String> findDistinctCategoriesByUserId(@Param("userId") Long userId);
 	    
+	        @Query("SELECT t.category As expenseCategory, SUM(t.amount) AS categoryExpense FROM Transactions t "+
+	        "WHERE t.users.id = :userId AND t.createdDate BETWEEN :startDate AND :endDate "+
+	        " GROUP BY t.category")		
+	        List<CatgoriesChartProjection> findBycategory(@Param("userId") Long userId,
+		            @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+	        
+//	        @Query("SELECT t.category AS expenseCategory, SUM(t.amount) AS categoryExpense " +
+//	        	       "FROM Transactions t " +
+//	        	       "WHERE t.users.id = :userId AND t.createdDate BETWEEN :startDate AND :endDate " +
+//	        	       "GROUP BY t.category")
+//	        	List<CatgoriesChartProjection> findByCategory(
+//	        	    @Param("userId") Long userId,
+//	        	    @Param("startDate") LocalDate startDate,
+//	        	    @Param("endDate") LocalDate endDate);
+//	        
+//	              
 
 	    
 }	
