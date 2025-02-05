@@ -13,6 +13,7 @@ import com.application.dto.ExpenseCategoryChartDTO;
 import com.application.dto.ReportProjection;
 import com.application.entity.Transactions;
 import com.application.projections.CatgoriesChartProjection;
+import com.application.projections.DailyExpenseProjection;
 
 @Repository
 public interface TransactionsRepository extends JpaRepository<Transactions, Long> {
@@ -92,7 +93,16 @@ public interface TransactionsRepository extends JpaRepository<Transactions, Long
 //	        	    @Param("endDate") LocalDate endDate);
 //	        
 //	              
-
-	    
-}	
-
+	        
+	        @Query("SELECT t.createdDate as expenseDates, SUM(t.amount) AS expenseAmount " +  
+	                "FROM Transactions t " +
+	                "WHERE t.users.id = :userId " +
+	                "AND t.createdDate BETWEEN :startDate AND :endDate " +
+	                "GROUP BY t.createdDate " +
+	                "ORDER BY t.createdDate")
+	         List<DailyExpenseProjection> getDailyExpenses(@Param("userId") Long userId, 
+	                                                       @Param("startDate") LocalDate startDate, 
+	                                                       @Param("endDate") LocalDate endDate);
+	        
+	        
+}

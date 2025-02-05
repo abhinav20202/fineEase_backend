@@ -3,6 +3,7 @@ package com.application.service;
 
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -12,11 +13,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.application.dto.DailyExpenseDTO;
+import com.application.dto.DailyIncomeDTO;
 import com.application.dto.ExpenseCategoryChartDTO;
 import com.application.dto.TransactionsDTO;
 import com.application.entity.Transactions;
 import com.application.entity.Users;
 import com.application.projections.CatgoriesChartProjection;
+import com.application.projections.DailyExpenseProjection;
+import com.application.repository.SettingsRepository;
 import com.application.repository.TransactionsRepository;
 
 import jakarta.transaction.Transaction;
@@ -28,6 +33,7 @@ public class TransactionsService {
 	private static final Logger log = LoggerFactory.getLogger(TransactionsService.class);
 	
 	@Autowired TransactionsRepository transactionsRepository;
+	@Autowired SettingsRepository settingsRepository;
 	
 	public Transactions saveOrUpdateTransactions(TransactionsDTO transactionsDTO, Users users) {
 		
@@ -110,4 +116,29 @@ public class TransactionsService {
 
 	}
 	
+	public List<DailyExpenseDTO> getDailyExpense(Long userId, LocalDate startDate, LocalDate endDate){
+	
+	  List<DailyExpenseProjection> expenseList 	= transactionsRepository.getDailyExpenses(userId, startDate, endDate);
+	  return expenseList.stream()
+			  .map(p -> new DailyExpenseDTO(p.getExpenseDates(), p.getExpenseAmount())
+					  ).collect(Collectors.toList());
+	
+	}
+	
+	
+	public List<DailyIncomeDTO> getDailyIncome(Long userId, LocalDate startDate, LocalDate endDate) {
+        
+		Double monthlyIncome = settingsRepository.monthlyIncome(userId);
+		List<DailyIncomeDTO> dailyIncomeList = new ArrayList<>();
+        int daysInMonth = startDate.lengthOfMonth(); 	
+        int todayDayOfMonth = LocalDate.now().getDayOfMonth();
+        Double dailyIncome = monthlyIncome / daysInMonth;
+
+        for (int i = 1; i <= todayDayOfMonth; i++) {
+            LocalDate date = startDate.withDayOfMonth(i);
+            dailyIncomeList.add(new DailyIncomeDTO(date, dailyIncome));
+        }
+        return dailyIncomeList;
+    }
 }
+
