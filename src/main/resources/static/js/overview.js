@@ -80,7 +80,7 @@ function renderPieChart() {
     }
 }
 
-function renderLineChart() {
+/*function renderLineChart() {
     let dailyIncomeElement = document.getElementById("dailyIncomeData");
     let dailyExpenseElement = document.getElementById("dailyExpenseData");
 
@@ -110,6 +110,113 @@ function renderLineChart() {
 
         // Convert Set into sorted array (ascending order)
         let sortedDates = Array.from(allDates).sort();
+
+        // Prepare final data lists
+        let labels = [];
+        let incomeValues = [];
+        let expenseValues = [];
+
+        sortedDates.forEach(date => {
+            labels.push(date);
+            incomeValues.push(incomeMap.get(date) || 0); // Default to 0 if missing
+            expenseValues.push(expenseMap.get(date) || 0); // Default to 0 if missing
+        });
+
+        // Get chart context
+        let ctx = document.getElementById("lineChart").getContext("2d");
+
+        // Destroy previous chart instance if exists
+        if (window.lineChartInstance) {
+            window.lineChartInstance.destroy();
+        }
+
+        // Create Line Chart using Chart.js
+        window.lineChartInstance = new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: labels, // X-Axis: Dates
+                datasets: [
+                    {
+                        label: "Daily Income",
+                        data: incomeValues,
+                        borderColor: "green",
+                        backgroundColor: "rgba(0, 128, 0, 0.1)", 
+                        fill: true,
+                        tension: 0.4 // Smooth curves
+                    },
+                    {
+                        label: "Daily Expense",
+                        data: expenseValues,
+                        borderColor: "red",
+                        backgroundColor: "rgba(255, 0, 0, 0.1)", 
+                        fill: true,
+                        tension: 0.4 // Smooth curves
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: "top"
+                    }
+                },
+                scales: {
+                    x: { 
+                        title: { display: true, text: "Date" },
+                        ticks: { autoSkip: true, maxTicksLimit: 10 }
+                    },
+                    y: { 
+                        title: { display: true, text: "Amount" },
+                        beginAtZero: true 
+                    }
+                }
+            }
+        });
+
+    } catch (error) {
+        console.error("Error parsing JSON data:", error);
+    }
+}
+*/
+
+function renderLineChart() {
+    let dailyIncomeElement = document.getElementById("dailyIncomeData");
+    let dailyExpenseElement = document.getElementById("dailyExpenseData");
+
+    if (!dailyIncomeElement || !dailyExpenseElement) {
+        console.error("Chart data elements not found. Make sure they exist in the HTML.");
+        return;
+    }
+
+    try {
+        // Extract JSON data safely from dataset
+        let incomeJson = dailyIncomeElement.getAttribute("data-income") || "[]";
+        let expenseJson = dailyExpenseElement.getAttribute("data-expense") || "[]";
+
+        // Parse JSON data
+        let dailyIncomeData = JSON.parse(incomeJson);
+        let dailyExpenseData = JSON.parse(expenseJson);
+
+        console.log("Parsed Daily Income Data:", dailyIncomeData);
+        console.log("Parsed Daily Expense Data:", dailyExpenseData);
+
+        // Function to format date array [YYYY, MM, DD] into "YYYY-MM-DD" string
+        function formatDate(dateArray) {
+            return `${dateArray[0]}-${String(dateArray[1]).padStart(2, '0')}-${String(dateArray[2]).padStart(2, '0')}`;
+        }
+
+        // Convert lists into maps with properly formatted date keys
+        let incomeMap = new Map(dailyIncomeData.map(item => [formatDate(item.incomeDate), item.dailyIncome]));
+        let expenseMap = new Map(dailyExpenseData.map(item => [formatDate(item.expenseDate), item.dailyExpense]));
+
+        // Get all unique dates from both datasets
+        let allDates = new Set([...incomeMap.keys(), ...expenseMap.keys()]);
+
+        // Convert Set into sorted array (ascending order)
+        let sortedDates = Array.from(allDates).sort((a, b) => new Date(a) - new Date(b));
 
         // Prepare final data lists
         let labels = [];
