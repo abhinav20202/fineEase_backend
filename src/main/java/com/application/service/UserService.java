@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 
 import com.application.dto.LoginDTO;
 import com.application.dto.UserDTO;
+import com.application.entity.Settings;
 import com.application.entity.Users;
+import com.application.repository.SettingsRepository;
 import com.application.repository.UserRepository;
 
 @Service
@@ -17,7 +19,7 @@ public class UserService {
 	
 	@Autowired
 	private UserRepository userRepository;
-	
+	@Autowired SettingsRepository settingsRepository;
 	
 	public Users findByEmail(String email){
 		return userRepository.findByEmail(email);
@@ -35,7 +37,11 @@ public class UserService {
         } else {
             user.setRegistrationDate(userDTO.getRegistrationDate());
         }
-		return userRepository.save(user);
+		 user = userRepository.save(user);
+		Settings settings = new Settings();
+		settings.setUser(user);
+		settingsRepository.save(settings);
+		return user;
 	}
 	
 	public Users authenticateUser(LoginDTO loginDTO) {

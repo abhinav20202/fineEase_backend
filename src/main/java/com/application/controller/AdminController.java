@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.application.dto.AdminDTO;
 import com.application.dto.UserDTO;
 import com.application.entity.Users;
 import com.application.service.AdminService;

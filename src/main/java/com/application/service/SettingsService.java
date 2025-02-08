@@ -1,5 +1,6 @@
 package com.application.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -64,4 +65,8 @@ public class SettingsService {
 	                .map(Settings::getMonthlyIncome)
 	                .orElse(0.0);
 	    }
+	    
+	    
+	    
+	    
 }

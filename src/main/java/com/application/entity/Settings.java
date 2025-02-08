@@ -14,9 +14,9 @@ public class Settings {
     @JoinColumn(name = "user_id", nullable = false, unique = true)
     private Users user;
 
-    private Double monthlyIncome;
-    private Double dailySpendLimit;
-    private Double monthlySpendLimit;
+    private double monthlyIncome;
+    private double dailySpendLimit;
+    private double monthlySpendLimit;
 
     // Getters and Setters
     public Long getId() {

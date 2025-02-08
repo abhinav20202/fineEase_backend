@@ -16,6 +16,9 @@ public interface SettingsRepository extends JpaRepository<Settings, Long>{
 	
 	@Query("SELECT s.monthlyIncome FROM Settings s WHERE s.user.id = :userId")
     Double monthlyIncome(@Param("userId") Long userId);
+	
+	@Query("SELECT s FROM Settings s WHERE s.user.id = :userId")
+    Settings findByUserId(@Param("userId") Long userId);
 
 
 }

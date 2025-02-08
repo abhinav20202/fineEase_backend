@@ -129,7 +129,7 @@
 						<td th:text="${transaction.payee}"></td>
 						<td th:text="${transaction.amount}"></td>
 						<td th:text="${transaction.account}"></td>
-						<td>
+					<!--	<td>
 							<a href="#" class="btn btn-primary btn-sm edit-transaction"
 							   th:data-id="${transaction.id}" 
 							   th:data-date="${transaction.createdDateTime}"
@@ -142,13 +142,32 @@
 							</a>
 
 
-							<!-- Delete Form -->
+							 Delete Form 
 							<form th:action="@{/transactions/delete/{id}(id=${transaction.id})}" method="post"
 							      onsubmit="return confirm('Are you sure you want to delete this transaction?');">
 							    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
 							</form>
 
+						</td>-->
+						<td>
+						    <div class="d-flex gap-2">
+						        <a href="#" class="btn btn-primary btn-sm edit-transaction"
+						           th:data-id="${transaction.id}"
+						           th:data-date="${transaction.createdDateTime}"
+						           th:data-category="${transaction.category}"
+						           th:data-payee="${transaction.payee}"
+						           th:data-amount="${transaction.amount}"
+						           th:data-account="${transaction.account}"
+						           data-bs-toggle="modal" data-bs-target="#editTransactionModal">
+						            Edit
+						        </a>
+
+						        <form th:action="@{/transactions/delete/{id}(id=${transaction.id})}" method="post" onsubmit="return confirm('Are you sure you want to delete this transaction?');">
+						            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+						        </form>
+						    </div>
 						</td>
+
 					</tr>
 				</tbody>
 

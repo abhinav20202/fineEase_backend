@@ -69,6 +69,15 @@
 				Welcome Back, <span th:text="${session.userName}"></span> 👋
 			</h1>
 			<p class="text-muted">This is your Financial Overview Report</p>
+			
+			<div th:if="${dailyLimitExceeded}" class="alert alert-danger" role="alert">
+			    🚨 Your daily spending limit has been exceeded!
+			</div>
+
+			<!-- Monthly Limit Exceeded Warning -->
+			<div th:if="${monthlyLimitExceeded}" class="alert alert-danger" role="alert">
+			    ⚠️ Your monthly spending limit has been exceeded!
+			</div>
 			<!--<div class="d-flex flex-wrap justify-content-center align-items-center gap-3 mt-4">
                  Dropdown for Accounts 
                 <div>

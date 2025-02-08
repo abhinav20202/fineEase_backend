@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.application.dto.DailyExpenseDTO;
 import com.application.dto.DailyIncomeDTO;
 import com.application.dto.ExpenseCategoryChartDTO;
+import com.application.dto.SettingsDTO;
 import com.application.service.SettingsService;
 import com.application.service.TransactionsService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -37,13 +38,16 @@ public class OverviewController {
         }
         
         
-Double monthlyIncome = settingsService.getMonthlyIncomeByUserId(userId);
+        
+        Double monthlyIncome = settingsService.getMonthlyIncomeByUserId(userId);
+        Double totalExpense = transactionsService.getTotalExpenseForCurrentMonth(userId);
+        SettingsDTO settingsDTO =settingsService.getSettingsByUserId(userId);
+       
+       
+        
+        Double remainingAmount = (monthlyIncome != null ? monthlyIncome : 0.0) - (totalExpense != null ? totalExpense : 0.0);
         
        
-        Double totalExpense = transactionsService.getTotalExpenseForCurrentMonth(userId);
-
-       
-        Double remainingAmount = (monthlyIncome != null ? monthlyIncome : 0.0) - (totalExpense != null ? totalExpense : 0.0);
         LocalDate firstDayOfMonth = LocalDate.now().withDayOfMonth(1);
         LocalDate today = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
@@ -54,6 +58,22 @@ Double monthlyIncome = settingsService.getMonthlyIncomeByUserId(userId);
         
         List<DailyExpenseDTO> dailyExpenseDTOs  = transactionsService.getDailyExpense(userId, firstDayOfMonth, today);
         List<DailyIncomeDTO> dailyIncomeDTOs = transactionsService.getDailyIncome(userId, firstDayOfMonth, today);
+         
+        
+        double todayExpense = dailyExpenseDTOs.stream()
+                .filter(expense -> expense.getExpenseDate().equals(today))
+                .map(DailyExpenseDTO::getDailyExpense)
+                .findFirst()
+                .orElse(0.0); 
+
+            double totalMonthlyExpense = dailyExpenseDTOs.stream()
+                .mapToDouble(DailyExpenseDTO::getDailyExpense)
+                .sum();
+            
+            boolean isDailyLimitExceeded = todayExpense > settingsDTO.getDailySpendLimit();
+            boolean isMonthlyLimitExceeded = totalMonthlyExpense > settingsDTO.getMonthlySpendLimit();
+            
+        
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
         objectMapper.findAndRegisterModules();
@@ -78,6 +98,8 @@ Double monthlyIncome = settingsService.getMonthlyIncomeByUserId(userId);
             //      model.addAttribute("dailyIncomes", dailyIncomeDTOs);
             model.addAttribute("dailyExpenses", dailyExpenseJson);
             model.addAttribute("dailyIncomes", dailyIncomeJson);	
+            model.addAttribute("dailyLimitExceeded", isDailyLimitExceeded);
+            model.addAttribute("monthlyLimitExceeded", isMonthlyLimitExceeded);
             
         } catch (Exception e) {
             e.printStackTrace();
