@@ -215,6 +215,13 @@
 		    });
 		});
 		</script>
+	<script>
+		window.onpageshow = function(event) {
+            if (event.persisted) {
+                window.location.reload(); // Forces page reload if accessed via back button
+            }
+        };
+	</script>
 	
 </body>
 </html>
