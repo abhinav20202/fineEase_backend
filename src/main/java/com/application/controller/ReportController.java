@@ -32,13 +32,18 @@ public class ReportController {
         @RequestParam(required = false) String endDate,
         @RequestParam(required = false) String category,
         @RequestParam(required = false) String search,
-        Model model, HttpSession session) {
+        Model model, HttpSession session, HttpServletRequest request) {
 
         Long userId = (Long) session.getAttribute("userId");
         if (userId == null) {
             model.addAttribute("error", "User ID is required");
             return "errorPage"; 
         }
+	HttpSession session = request.getSession(false);
+	if (session == null || session.getAttribute("userId") == null) {
+		return "redirect:/login";  
+		}
+	    
 
        
         LocalDate start = (startDate != null  && startDate != "") ? LocalDate.parse(startDate) : LocalDate.now().withDayOfMonth(1);
